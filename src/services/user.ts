@@ -20,7 +20,7 @@ export const userApi = createApi({
   }),
   endpoints: builder => ({
     getUserByAuth0Id: builder.query<IUser, string>({
-      query: auth0UserId => `user/${auth0UserId}`,
+      query: auth0UserId => `user/${decodeURIComponent(auth0UserId)}`,
     }),
   }),
 })

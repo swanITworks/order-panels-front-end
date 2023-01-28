@@ -10,6 +10,8 @@ import React, { useEffect } from "react"
 import { appActions } from "../../store/App/app-slice"
 import { useAuth0 } from "@auth0/auth0-react"
 import { userActions } from "../../store/User/user-slice"
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxToolkitHooks"
+import ViewLoader from "../UI/ViewLoader"
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -20,24 +22,26 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }))
 
 const AppLayout: React.FC<{ props?: string }> = ({ props }) => {
-  // const appState = useSelector((state: RootState) => state.app)
+  const { token } = useAppSelector(state => state.user)
+  const dispatch = useAppDispatch()
+  const { getAccessTokenSilently } = useAuth0()
   // const dispatch = useDispatch()
   // const { errors } = appState
 
-  // const { getAccessTokenSilently } = useAuth0()
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently()
+        dispatch(userActions.setToken(accessToken))
+      } catch (e) {
+        console.log(e)
+      }
+    }
 
-  // useEffect(() => {
-  //   const getToken = async () => {
-  //     try {
-  //       const accessToken = await getAccessTokenSilently()
-  //       dispatch(userActions.setToken(accessToken))
-  //     } catch (e) {
-  //       console.log(e)
-  //     }
-  //   }
-
-  //   getToken()
-  // }, [getAccessTokenSilently])
+    if (!token) {
+      getToken()
+    }
+  }, [])
 
   // useEffect(() => {
   //   if (errors.length > 0) {
@@ -60,9 +64,7 @@ const AppLayout: React.FC<{ props?: string }> = ({ props }) => {
               {error}
             </Alert>
           ))} */}
-        <Box sx={{ p: 3 }}>
-          <Outlet />
-        </Box>
+        <Box sx={{ p: 3 }}>{token ? <Outlet /> : <ViewLoader />}</Box>
       </Box>
     </Box>
   )
