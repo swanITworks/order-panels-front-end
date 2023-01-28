@@ -1,20 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit"
+import type { PayloadAction } from "@reduxjs/toolkit"
 
 interface UserState {
-  token: string
+  token: string | undefined
+  auth0UserId: string | undefined
 }
 
 const initialState: UserState = {
- token: ""
+  token: undefined,
+  auth0UserId: undefined,
 }
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
-      state.token= action.payload
+      state.token = action.payload
     },
   },
 })
