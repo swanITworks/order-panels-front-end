@@ -19,12 +19,12 @@ export const userApi = createApi({
     },
   }),
   endpoints: builder => ({
-    getUserByAuth0Id: builder.query<IUser, string>({
-      query: auth0UserId => `user/${decodeURIComponent(auth0UserId)}`,
+    getUserDataByAuth0Id: builder.query<IUser, string>({
+      query: auth0UserId => `users/${decodeURIComponent(auth0UserId)}`,
     }),
   }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserByAuth0IdQuery } = userApi
+export const { useGetUserDataByAuth0IdQuery } = userApi

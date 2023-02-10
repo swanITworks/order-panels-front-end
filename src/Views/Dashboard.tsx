@@ -3,12 +3,12 @@ import { Button } from "@mui/material"
 import { Outlet } from "react-router"
 import ViewLoader from "../Components/UI/ViewLoader"
 import { UseCurrentContent } from "../hooks/useCurrentContent"
-import { useGetUserByAuth0IdQuery } from "../services/user"
+import { useGetUserDataByAuth0IdQuery } from "../services/user"
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth0()
   const auth0UserId: string = user?.sub!
-  const { data, error, isLoading } = useGetUserByAuth0IdQuery(auth0UserId)
+  const { data, error, isLoading } = useGetUserDataByAuth0IdQuery(auth0UserId)
 
   //const { data, error, isLoading } = useGetPokemonByNameQuery("bulbasaur")
   const titleContent = UseCurrentContent("home", "title")
