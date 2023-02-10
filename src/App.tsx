@@ -44,6 +44,8 @@ export const App: React.FC = () => {
         >
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="quontations" element={<p>Quontations</p>} />
+          <Route path="quontations/new" element={<p>New Quontation</p>} />
         </Route>
         <Route path="*" element={<p>Page not found</p>} />
       </Routes>
