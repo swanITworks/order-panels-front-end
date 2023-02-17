@@ -8,6 +8,7 @@ import TopBar from "./Components/TopBar/TopBar"
 import Dashboard from "./Views/Dashboard"
 import ViewLoader from "./Components/UI/ViewLoader"
 import AppLayout from "./Components/AppLayout/AppLayout"
+import NewQuotation from "./Views/NewQuotation"
 
 export const App: React.FC = () => {
   const { isLoading, isAuthenticated, error } = useAuth0()
@@ -45,7 +46,10 @@ export const App: React.FC = () => {
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="quontations" element={<p>Quontations</p>} />
-          <Route path="quontations/new" element={<p>New Quontation</p>} />
+          <Route
+            path="quotations/new/:quontationId"
+            element={<NewQuotation />}
+          />
         </Route>
         <Route path="*" element={<p>Page not found</p>} />
       </Routes>

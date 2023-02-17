@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { intContentTypes } from "../../const/int-content"
+import { IntContentTypes } from "../../const/int-content"
 
 interface AppState {
   isLeftMenuExtended: boolean
   isAppLoading: boolean
   errors: string[]
   isModalOpen: boolean
-  currentLanguage: keyof intContentTypes
+  currentLanguage: keyof IntContentTypes
 }
 
 const initialState: AppState = {

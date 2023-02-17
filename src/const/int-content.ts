@@ -1,25 +1,41 @@
-export type viewType = {
+export type ComponentElementsType = {
   title: string
 }
 
-export type languageItem = {
-  home: viewType
+export type ViewName = {
+  home: ComponentElementsType
+  newQuontation: ComponentElementsType
 }
 
-export interface intContentTypes {
-  pl: languageItem
-  eng: languageItem
+export type UiElementType = {
+  buttons: {
+    goToPriceOffer: string
+  }
 }
 
-export const intContent: intContentTypes = {
+export type ComponentCategory = {
+  views: ViewName
+  ui: UiElementType
+}
+
+export interface IntContentTypes {
+  pl: ComponentCategory
+  eng: ComponentCategory
+}
+
+export const intContent: IntContentTypes = {
   pl: {
-    home: {
-      title: "Witaj na stronie Labi Meble",
+    views: {
+      home: { title: "Witaj na stronie Labi Meble" },
+      newQuontation: { title: "Nowa wycena" },
     },
+    ui: { buttons: { goToPriceOffer: "Wyceń usługę wykonania frontów" } },
   },
   eng: {
-    home: {
-      title: "Welcome on Labi Meble web page",
+    views: {
+      home: { title: "Witaj na stronie Labi Meble" },
+      newQuontation: { title: "New Qountation" },
     },
+    ui: { buttons: { goToPriceOffer: "Panel Quontation" } },
   },
 }
