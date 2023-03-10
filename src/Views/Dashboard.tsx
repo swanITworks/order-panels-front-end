@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
 
   const onClickGoQuontation = () => {
     console.log("create quontation in db")
-    navigate("/quotations/new/12345")
+    navigate("/quotations/new/12345/choose-material")
   }
 
   if (isLoading) {

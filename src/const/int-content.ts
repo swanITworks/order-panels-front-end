@@ -15,6 +15,11 @@ export type UiElementType = {
 
 export type ComponentCategory = {
   views: ViewName
+  components: {
+    panelListSection: {
+      title: string
+    }
+  }
   ui: UiElementType
 }
 
@@ -29,12 +34,22 @@ export const intContent: IntContentTypes = {
       home: { title: "Witaj na stronie Labi Meble" },
       newQuontation: { title: "Nowa wycena" },
     },
+    components: {
+      panelListSection: {
+        title: "Lista formatek",
+      },
+    },
     ui: { buttons: { goToPriceOffer: "Wyceń usługę wykonania frontów" } },
   },
   eng: {
     views: {
       home: { title: "Witaj na stronie Labi Meble" },
       newQuontation: { title: "New Quontation" },
+    },
+    components: {
+      panelListSection: {
+        title: "Panels List",
+      },
     },
     ui: { buttons: { goToPriceOffer: "Panel Quontation" } },
   },

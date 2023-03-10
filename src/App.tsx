@@ -10,6 +10,7 @@ import ViewLoader from "./Components/UI/ViewLoader"
 import AppLayout from "./Components/AppLayout/AppLayout"
 import NewQuotation from "./Views/NewQuotation"
 import ChooseMaterialSection from "./Components/ChooseMaterialSection/ChooseMaterialSection"
+import PanelsListSection from "./Components/PanelsListSection/PanelsListSection"
 
 export const App: React.FC = () => {
   const { isLoading, isAuthenticated, error } = useAuth0()
@@ -49,7 +50,7 @@ export const App: React.FC = () => {
           <Route path="quontations" element={<p>Quontations</p>} />
           <Route path="quotations/new/:quontationId" element={<NewQuotation />}>
             <Route path="choose-material" element={<ChooseMaterialSection />} />
-            <Route path="panels-list" element={<p>Panels list</p>} />
+            <Route path="panels-list" element={<PanelsListSection />} />
             <Route path="*" element={<ChooseMaterialSection />} />
           </Route>
         </Route>
