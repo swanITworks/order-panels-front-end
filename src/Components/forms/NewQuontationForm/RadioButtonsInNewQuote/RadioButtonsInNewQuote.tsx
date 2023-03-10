@@ -1,10 +1,12 @@
 import { RadioGroup } from "@mui/material"
-import React from "react"
+import React, { FC, ChangeEvent } from "react"
 import { IMaterial } from "../../../../interfaces/interfaces"
 import { createMaterialObject } from "../../../../utils/utils"
 import RadioButtonForNewQuote from "./RadioButtonForNewQuote/RadioButtonForNewQuote"
 
-type Props = {}
+type Props = {
+  onFormChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
 
 const MATERIALS_DATA: IMaterial[] = [
   createMaterialObject(
@@ -31,11 +33,11 @@ const MATERIALS_DATA: IMaterial[] = [
   ),
 ]
 
-const RadioButtonsInNewQuote = (props: Props) => {
+const RadioButtonsInNewQuote: FC<Props> = ({ onFormChange }) => {
   const materialsJSXElements = MATERIALS_DATA.map(materialItem => {
-    const { materialName, id } = materialItem
+    const { id } = materialItem
 
-    return <RadioButtonForNewQuote key={id} />
+    return <RadioButtonForNewQuote key={id} matetrialData={materialItem} />
   })
 
   return (
@@ -44,6 +46,7 @@ const RadioButtonsInNewQuote = (props: Props) => {
       aria-labelledby="demo-form-control-label-placement"
       name="position"
       defaultValue="top"
+      onChange={onFormChange}
     >
       {materialsJSXElements}
     </RadioGroup>

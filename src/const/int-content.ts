@@ -34,7 +34,7 @@ export const intContent: IntContentTypes = {
   eng: {
     views: {
       home: { title: "Witaj na stronie Labi Meble" },
-      newQuontation: { title: "New Qountation" },
+      newQuontation: { title: "New Quontation" },
     },
     ui: { buttons: { goToPriceOffer: "Panel Quontation" } },
   },

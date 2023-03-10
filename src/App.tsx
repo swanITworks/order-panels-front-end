@@ -9,6 +9,7 @@ import Dashboard from "./Views/Dashboard"
 import ViewLoader from "./Components/UI/ViewLoader"
 import AppLayout from "./Components/AppLayout/AppLayout"
 import NewQuotation from "./Views/NewQuotation"
+import ChooseMaterialSection from "./Components/ChooseMaterialSection/ChooseMaterialSection"
 
 export const App: React.FC = () => {
   const { isLoading, isAuthenticated, error } = useAuth0()
@@ -46,10 +47,11 @@ export const App: React.FC = () => {
           <Route index element={<Dashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="quontations" element={<p>Quontations</p>} />
-          <Route
-            path="quotations/new/:quontationId"
-            element={<NewQuotation />}
-          />
+          <Route path="quotations/new/:quontationId" element={<NewQuotation />}>
+            <Route path="choose-material" element={<ChooseMaterialSection />} />
+            <Route path="panels-list" element={<p>Panels list</p>} />
+            <Route path="*" element={<ChooseMaterialSection />} />
+          </Route>
         </Route>
         <Route path="*" element={<p>Page not found</p>} />
       </Routes>

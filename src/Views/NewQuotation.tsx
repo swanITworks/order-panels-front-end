@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react"
-import { Button } from "@mui/material"
+import { Button, Divider, Typography } from "@mui/material"
+import { Box } from "@mui/system"
 import { Outlet, useNavigate } from "react-router"
 import NewQuotationForm from "../Components/forms/NewQuontationForm/NewQuotationForm"
 import ViewLoader from "../Components/UI/ViewLoader"
@@ -25,13 +26,13 @@ const NewQuotation: React.FC = () => {
   }
 
   return (
-    <div>
-      <p>{title}</p>
-      <p>choose material</p>
-      <NewQuotationForm />
-      {/* {JSON.stringify(user)}
-      {JSON.stringify(data)} */}
-    </div>
+    <Box component={"section"}>
+      <Typography component={"h2"} variant={"h5"}>
+        {title}
+      </Typography>
+      <Divider />
+      <Outlet />
+    </Box>
   )
 }
 

@@ -1,16 +1,18 @@
 import { FormControlLabel, Radio } from "@mui/material"
 import React from "react"
+import { IMaterial } from "../../../../../interfaces/interfaces"
 
 type Props = {
-  key: string
+  matetrialData: IMaterial
 }
 
-const RadioButtonForNewQuote = (props: Props) => {
+const RadioButtonForNewQuote = ({ matetrialData }: Props) => {
+  const { materialName, id } = matetrialData
   return (
     <FormControlLabel
-      value="top"
+      value={id}
       control={<Radio />}
-      label="Top"
+      label={materialName}
       labelPlacement="top"
     />
   )
