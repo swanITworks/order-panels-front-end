@@ -25,3 +25,13 @@ export type MaterialType = {
   structure: boolean
   isStructureTransverse: boolean
 }
+
+export interface PanelItem {
+  id: string
+  height: number
+  width: number
+  edgeLeft: boolean
+  edgeTop: boolean
+  edgeRight: boolean
+  edgeBottom: boolean
+}
