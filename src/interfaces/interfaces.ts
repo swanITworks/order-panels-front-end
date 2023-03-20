@@ -26,7 +26,7 @@ export type MaterialType = {
   isStructureTransverse: boolean
 }
 
-export interface PanelItem {
+export interface IPanelItem {
   id: string
   height: number
   width: number
