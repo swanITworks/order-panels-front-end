@@ -1,107 +1,77 @@
 import * as React from "react"
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles"
+import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
-import MuiDrawer from "@mui/material/Drawer"
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
-import List from "@mui/material/List"
-import CssBaseline from "@mui/material/CssBaseline"
 import Typography from "@mui/material/Typography"
-import Divider from "@mui/material/Divider"
+import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
-
-import { useSelector } from "react-redux"
-import type { RootState } from "../../../store/store"
-import { useDispatch } from "react-redux"
-import { appActions } from "../../../store/App/app-slice"
-import LogoOnDark from "../../UI/Logo/LogoOnDark"
-import { Alert, Button, LinearProgress } from "@mui/material"
-import LogoOnBright from "../../UI/Logo/LogoOnBright"
-import LogoutButton from "../../UI/LogoutButton/LogoutButton"
-
-const drawerWidth = 240
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: prop => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}))
+import { useTheme } from "@mui/material"
+import { NavLink } from "react-router-dom"
 
 export default function TopBar() {
-  const appState = useSelector((state: RootState) => state.app)
-  const dispatch = useDispatch()
+  const theme = useTheme()
 
-  const { isLeftMenuExtended, isAppLoading, errors } = appState
+  const researchSections: {
+    sectionName: string
+    path: string
+  }[] = [
+    {
+      sectionName: "Dashboard",
+      path: "/dashboard",
+    },
+    {
+      sectionName: "Quantations",
+      path: "/offers",
+    },
+    {
+      sectionName: "Orders",
+      path: "/orders",
+    },
+    {
+      sectionName: "Your data",
+      path: "/account-data",
+    },
+  ]
 
-  const extendDrawer = (): void => {
-    dispatch(appActions.extendLeftMenu())
-  }
+  const linksJSXelements = researchSections.map((linkItem, index) => {
+    const { path, sectionName } = linkItem
+    return (
+      <NavLink key={`${path}_${index}`} to={path}>
+        {sectionName}
+      </NavLink>
+    )
+  })
 
   return (
-    <AppBar position="fixed" open={isLeftMenuExtended}>
+    <AppBar position="static">
       <Toolbar>
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={extendDrawer}
+          size="large"
           edge="start"
-          sx={{
-            marginRight: 5,
-            ...(isLeftMenuExtended && { display: "none" }),
-          }}
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
         >
           <MenuIcon />
         </IconButton>
-        <Box sx={{ textAlign: "right", width: "100%" }}>
-          <LogoutButton />
-        </Box>
-
-        {/* <Typography variant="h6" noWrap component="div">
-          EthicsInsider
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          News
         </Typography>
-        <Button
-          color="secondary"
-          onClick={() => dispatch(appActions.setLoadingOn())}
-        >
-          SET ON LOADING
-        </Button>
-        <Button
-          color="secondary"
-          onClick={() => dispatch(appActions.setLoadingOff())}
-        >
-          SET OFF LOADING
-        </Button>
-        <Button
-          color="secondary"
-          onClick={() => dispatch(appActions.setError("error"))}
-        >
-          SET ERROR
-        </Button>
-        <Button
-          color="secondary"
-          onClick={() => dispatch(appActions.clearErrors())}
-        >
-          CLEAR ERRORS
-        </Button> */}
+        <Button color="inherit">Login</Button>
       </Toolbar>
-      {isAppLoading && <LinearProgress color="secondary" />}
+      <Toolbar sx={{ bgcolor: theme.palette.secondary.light }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "30%",
+            m: "auto",
+          }}
+        >
+          {linksJSXelements}
+        </Box>
+      </Toolbar>
     </AppBar>
   )
 }

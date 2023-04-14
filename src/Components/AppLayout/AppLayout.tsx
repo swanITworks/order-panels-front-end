@@ -2,7 +2,6 @@ import { Alert, AppBar, Box, Drawer, Typography } from "@mui/material"
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles"
 import { useSelector } from "react-redux"
 import { Outlet } from "react-router-dom"
-import SideDrawer from "./SideDrawer/SideDrawer"
 import TopBar from "./TopBar/TopBar"
 import type { RootState } from "../../store/store"
 import { useDispatch } from "react-redux"
@@ -53,11 +52,9 @@ const AppLayout: React.FC<{ props?: string }> = ({ props }) => {
   // }, [errors])
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <TopBar />
-      <SideDrawer />
       <Box component="main" sx={{ flexGrow: 1 }}>
-        <DrawerHeader />
         {/* {errors.length > 0 &&
           errors.map((error, index) => (
             <Alert key={error + index} severity="error">

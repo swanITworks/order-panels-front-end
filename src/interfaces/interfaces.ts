@@ -30,6 +30,7 @@ export interface IPanelItem {
   id: string
   height: number
   width: number
+  pcs: number
   edgeLeft: boolean
   edgeTop: boolean
   edgeRight: boolean

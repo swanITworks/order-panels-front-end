@@ -9,27 +9,17 @@ import Paper from "@mui/material/Paper"
 import {
   Box,
   Button,
+  FormControl,
   FormControlLabel,
   IconButton,
   Radio,
   RadioGroup,
   Switch,
+  TableFooter,
 } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 import { IPanelItem } from "../../../interfaces/interfaces"
 import { nanoid } from "nanoid"
-
-function createData(id: string, height: number, width: number) {
-  return { id, height, width }
-}
-
-const rows = [
-  createData("id1", 159, 696),
-  createData("id2", 712, 696),
-  createData("id3", 262, 16.0),
-  createData("id4", 305, 3.7),
-  createData("id5", 356, 16.0),
-]
 
 const label = {
   inputProps: { "aria-label": "Switch demo" },
@@ -40,7 +30,7 @@ interface PreviewPanelProps {
 }
 
 const PreviewPanel: React.FC<PreviewPanelProps> = ({ currentPanelData }) => {
-  const { id, height, width, edgeLeft, edgeTop, edgeRight, edgeBottom } =
+  const { id, height, width, pcs, edgeLeft, edgeTop, edgeRight, edgeBottom } =
     currentPanelData
 
   const heighOfPreviewPanelInPx = 500
@@ -100,7 +90,6 @@ const PreviewPanel: React.FC<PreviewPanelProps> = ({ currentPanelData }) => {
       >
         T
       </Box>
-
       <Box
         sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
       >
@@ -169,6 +158,16 @@ const PanelsListTable: React.FC<PanelsListProps> = ({
 }) => {
   const [selectedRowId, setSelectedRowId] = useState<string | null>(null)
 
+  const pricePerSquareMeter = 150
+
+  const sumOfSquareMeters = panelsData.reduce(
+    (prev, cur) => prev + +cur.pcs * (((cur.height / 1000) * cur.width) / 1000),
+    0
+  )
+  const sumOfPcs = panelsData.reduce((prev, cur) => prev + +cur.pcs, 0)
+
+  const totalPrice = pricePerSquareMeter * sumOfSquareMeters
+
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSelectedRowId(e.target.value)
   }
@@ -185,17 +184,23 @@ const PanelsListTable: React.FC<PanelsListProps> = ({
 
   return (
     <RadioGroup onChange={onChangeHandler} value={selectedRowId}>
-      <div>{JSON.stringify(selectedRowId)}</div>
-      <div>{JSON.stringify(selectedRowData)}</div>
       <TableContainer
         component={Paper}
-        sx={{ marginY: 5, display: "flex", justifyContent: "space-between" }}
+        sx={{
+          marginY: 5,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
       >
         <Table aria-label="simple table" sx={{ maxWidth: "500px" }}>
           <TableHead>
             <TableRow>
-              <TableCell align="center" sx={{ width: "20px" }}>
-                Select<Button onClick={clearSelected}>Clear</Button>
+              <TableCell align="center" sx={{ width: "10px" }}>
+                Select
+                <Button onClick={clearSelected} sx={{ m: 0, p: 0 }}>
+                  Clear
+                </Button>
               </TableCell>
               <TableCell align="center" sx={{ width: "20px" }}>
                 No.
@@ -205,6 +210,9 @@ const PanelsListTable: React.FC<PanelsListProps> = ({
               </TableCell>
               <TableCell align="right" sx={{ width: "100px" }}>
                 Width &nbsp;(mm)
+              </TableCell>
+              <TableCell align="right" sx={{ width: "100px" }}>
+                Pcs
               </TableCell>
               <TableCell align="right" sx={{ width: "50px" }}>
                 Edge L
@@ -223,21 +231,17 @@ const PanelsListTable: React.FC<PanelsListProps> = ({
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ verticalAlign: "top" }}>
             {panelsData.map((row, index) => {
               return (
-                <TableRow
-                  key={index}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  onClick={() => onRowClickHandler(row.id)}
-                >
-                  <TableCell align="center" sx={{ width: "20px" }}>
-                    <FormControlLabel
-                      value={row.id}
-                      id={row.id}
-                      control={<Radio />}
-                      label=""
-                    />
+                <TableRow key={index} onClick={() => onRowClickHandler(row.id)}>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      width: "10px",
+                    }}
+                  >
+                    <Radio sx={{ m: "auto" }} value={row.id} id={row.id} />
                   </TableCell>
                   <TableCell align="center" sx={{ width: "20px" }}>
                     {index + 1}.
@@ -247,6 +251,9 @@ const PanelsListTable: React.FC<PanelsListProps> = ({
                   </TableCell>
                   <TableCell align="right" sx={{ width: "100px" }}>
                     {row.width}
+                  </TableCell>
+                  <TableCell align="right" sx={{ width: "100px" }}>
+                    {row.pcs}
                   </TableCell>
                   <TableCell align="right" sx={{ width: "50px", pr: 1 }}>
                     <Switch
@@ -297,6 +304,30 @@ const PanelsListTable: React.FC<PanelsListProps> = ({
               )
             })}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
+              <TableCell align="right" sx={{ pr: 0 }}>
+                Sum:
+              </TableCell>
+              <TableCell align="center" sx={{ pr: 0 }}>
+                {sumOfPcs}
+              </TableCell>
+              <TableCell align="right">Surface:</TableCell>
+              <TableCell align="center">
+                {`${Math.round(sumOfSquareMeters * 100) / 100} m2`}
+              </TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                Price:
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                {`${Math.round(totalPrice * 100) / 100} PLN`}
+              </TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
         <PreviewPanel
           currentPanelData={
@@ -308,6 +339,7 @@ const PanelsListTable: React.FC<PanelsListProps> = ({
                   height: 600,
                   width: 600,
                   id: nanoid(),
+                  pcs: 1,
                   edgeLeft: true,
                   edgeTop: true,
                   edgeRight: true,

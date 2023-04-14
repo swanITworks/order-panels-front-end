@@ -8,6 +8,8 @@ import React, {
 } from "react"
 import { useNavigate } from "react-router-dom"
 import RadioButtonsInNewQuote from "./RadioButtonsInNewQuote/RadioButtonsInNewQuote"
+import { useDispatch } from "react-redux"
+import { quontationActions } from "../../../store/Quontation/quontation-slice"
 
 type Props = {}
 
@@ -17,6 +19,7 @@ const NewQuotationForm = (props: Props) => {
   )
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const onFormChangHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setMaterialFormValue(e.target.value)
@@ -25,6 +28,7 @@ const NewQuotationForm = (props: Props) => {
   const onSubmitHandler = (e: SyntheticEvent<HTMLFormElement>): void => {
     e.preventDefault()
     console.log("go next!")
+    dispatch(quontationActions.setChoosenMaterial(materialFormValue as string))
     navigate("../panels-list")
   }
 
